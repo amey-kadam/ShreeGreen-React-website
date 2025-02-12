@@ -12,7 +12,7 @@ const App = () => {
       <Navbar />
       <HeroSection />
       <Features />
-      {/* <GlobalPresence/> */}
+      <GlobalPresence/>
       <Footer />
     </div>
   );
