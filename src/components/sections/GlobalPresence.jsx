@@ -15,8 +15,8 @@ const GlobalPresence = () => {
   useEffect(() => {
     if (!mapContainerRef.current) return;
 
-    // Ensure access token exists
-    const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
+    // Access token using Vite's environment variable syntax
+    const accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
     if (!accessToken) {
       console.error('Mapbox access token is missing');
       return;
@@ -29,7 +29,7 @@ const GlobalPresence = () => {
       style: "mapbox://styles/mapbox/light-v11",
       center: [78, 20],
       zoom: 1.25,
-      minZoom: 1, // Add zoom constraints
+      minZoom: 1,
       maxZoom: 15,
     });
 
@@ -43,13 +43,12 @@ const GlobalPresence = () => {
       // Add markers after map is loaded
       COUNTRIES.forEach((country) => {
         const marker = new mapboxgl.Marker({
-          color: "#4CAF50", // Using our theme color
-          scale: 0.8 // Slightly smaller markers
+          color: "#4CAF50",
+          scale: 0.8
         })
           .setLngLat(country.coordinates)
           .addTo(mapInstance);
 
-        // Create popup but don't add it to map yet
         const popup = new mapboxgl.Popup({
           closeButton: false,
           closeOnClick: false,
@@ -57,36 +56,29 @@ const GlobalPresence = () => {
         })
           .setText(country.name);
 
-        // Show popup on hover
         marker.getElement().addEventListener('mouseenter', () => {
           marker.setPopup(popup);
           popup.addTo(mapInstance);
         });
 
-        // Hide popup on leave
         marker.getElement().addEventListener('mouseleave', () => {
           popup.remove();
         });
       });
     });
 
-    // Cleanup function
     return () => {
       mapInstance.remove();
     };
-  }, []); // Empty dependency array since we don't have any dependencies
+  }, []);
 
   return (
     <section className="global-presence">
       <div className="global-content max-w-6xl mx-auto px-4 py-16">
         <h2 className="global-title text-3xl font-bold text-center mb-6">
-          Global Presence
         </h2>
         <p className="global-description text-center mb-12 max-w-3xl mx-auto text-gray-600">
-          We are proud to operate globally with a strong presence in India, Oman, and the UAE. 
-          Our sister companies in Oman and Dubai ensure a seamless distribution network and 
-          unparalleled customer support, strengthening our position as a trusted leader in 
-          the AAC block industry.
+        
         </p>
         <div 
           ref={mapContainerRef} 
