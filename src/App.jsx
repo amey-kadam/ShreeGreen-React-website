@@ -4,6 +4,8 @@ import Footer from './components/layout/Footer'
 import HeroSection from './components/sections/HeroSection'
 import Features from './components/sections/Features'
 import GlobalPresence from './components/sections/GlobalPresence'
+import WhyChooseUs from "./components/sections/WhyChooseUs";
+import ClientsSection from './components/sections/clients'
 
 
 const App = () => {
@@ -13,6 +15,8 @@ const App = () => {
       <HeroSection />
       <Features />
       <GlobalPresence/>
+      <WhyChooseUs/>
+      <ClientsSection/>
       <Footer />
     </div>
   );
